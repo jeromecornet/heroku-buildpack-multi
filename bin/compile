@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env bash 
 
 set -e
 
@@ -13,7 +13,7 @@ function indent() {
 unset GIT_DIR
 
 for BUILDPACK in $(cat $1/.buildpacks); do
-  dir=$(mktemp -t buildpackXXXXX)
+  dir=$(mktemp -t buildpackXXXXX)-test
   rm -rf $dir
 
   url=${BUILDPACK%#*}
@@ -30,6 +30,7 @@ for BUILDPACK in $(cat $1/.buildpacks); do
       mkdir -p "$dir"
       curl -s "$url" | tar xvz -C "$dir" >/dev/null 2>&1
     else
+      echo "cloning from $url into $dir"
       git clone $url $dir 
     fi
     cd $dir
